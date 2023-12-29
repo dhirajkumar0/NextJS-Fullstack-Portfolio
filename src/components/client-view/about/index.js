@@ -56,9 +56,10 @@ export default function ClientAboutView({ data }) {
   return (
     <div className="max-w-screen-xl mt-24 mb-6 sm:mt-14 sm:mb-14 px-6 sm:px-8 lg:px-16 mx-auto" id="about">
       <div className="w-full flex">
-        <AnimationWrapper className="rounded-lg w-full grid-flow-row grid grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-green-main bg-ehite-500 z-10">
+        <AnimationWrapper className="rounded-lg w-full grid-flow-row grid grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-green-main bg-white-500 z-10">
           {aboutDataInfo.map((infoItem, index) => (
             <motion.div
+              key={index}
               className={`flex items-center justify-start
                 ${
                   index === 0
@@ -68,19 +69,16 @@ export default function ClientAboutView({ data }) {
                     : "sm:justify-end"
                 } py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0
                 `}
-              key={index}
               custom={{ duration: 2 + index }}
               variants={setVariants}
             >
-              <div className="flex m-0 w-40 sm:w-auto">
-                <div className="flex flex-col">
-                  <p className="text-[50px] text-green-main font-bold">
-                    {infoItem.value}+
-                  </p>
-                  <p className="text-[25px] font-bold text-[#000000]">
-                    {infoItem.label}
-                  </p>
-                </div>
+              <div className="flex flex-col">
+                <p className="text-[50px] text-green-main font-bold">
+                  {infoItem.value}+
+                </p>
+                <p className="text-[25px] font-bold text-[#000000]">
+                  {infoItem.label}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -91,6 +89,7 @@ export default function ClientAboutView({ data }) {
           <h1 className="leading-[70px] mb-4 text-3xl lg:text-4xl xl:text-5xl font-medium">
             {headingText.split(" ").map((item, index) => (
               <span
+                key={index}
                 className={`${index === 6 ? "text-green-main" : "text-[#000]"}`}
               >
                 {item}{" "}
@@ -114,21 +113,24 @@ export default function ClientAboutView({ data }) {
           </motion.div>
         </AnimationWrapper>
         <AnimationWrapper className={"flex items-center w-full p-4"}>
-          <motion.div
-            variants={setVariants}
-            className="grid gap-4 grid-cols-3 h-full max-h-[200px] w-full"
-          >
-            {data?.skills.split(",").map((skill) => (
-              <motion.div
-                className="w-full flex justify-center items-center"
-                variants={skillItemVariant}
-              >
-                <button className="whitespace-nowrap text-ellipsis overflow-hidden py-3 w-[160px] px-6 border-[2px] border-green-main bg-[#fff] text-[#000] font-semibold rounded-lg text-xl tracking-widest hover:shadow-green-main transition-all outline-none">
-                  {skill}
-                </button>
-              </motion.div>
-            ))}
-          </motion.div>
+          {data?.skills && (
+            <motion.div
+              variants={setVariants}
+              className="grid gap-4 grid-cols-3 h-full max-h-[200px] w-full"
+            >
+              {data.skills.split(",").map((skill, index) => (
+                <motion.div
+                  key={index}
+                  className="w-full flex justify-center items-center"
+                  variants={skillItemVariant}
+                >
+                  <button className="whitespace-nowrap text-ellipsis overflow-hidden py-3 w-[160px] px-6 border-[2px] border-green-main bg-[#fff] text-[#000] font-semibold rounded-lg text-xl tracking-widest hover:shadow-green-main transition-all outline-none">
+                    {skill}
+                  </button>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </AnimationWrapper>
       </div>
     </div>
